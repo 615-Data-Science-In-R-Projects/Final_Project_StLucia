@@ -52,7 +52,7 @@ server <- function(input, output) {
 
     output$stLucia_map <- renderLeaflet({
         leaflet() |> 
-        addTiles() |> setView(lng=-60.966667, lat=13.883333, zoom = 9.75) |> 
+        addTiles() |> setView(lng=-60.966667, lat=13.883333, zoom = 11) |> 
         addMarkers(lng=-60.966667, lat=13.883333)
       
     })

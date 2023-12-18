@@ -22,16 +22,15 @@ library(readxl)
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   
-  setBackgroundImage(
-    src = "St-Lucia.jpeg"
-  ),
+  
 
   navbarPage(id = "tabs",
-             title = "St. Lucia",
+             titlePanel(title = span(img(src="lc-flag.jpeg",height=30, width =40, style = "float:left;")), 'Saint Lucia'),
              
              #maps, general information:
              navbarMenu(title = "St Lucia",
                         tabPanel("About St. Lucia",
+                                 img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
                                  p("St. Lucia is an Island Nation in the South East Caribbean and part of
                                  the Windward Isles of the Lesser Antilles Chain. These include Dominica, Grenada, 
                                    Saint Lucia, Saint Vincent and the Grenadines and the French Overseas Territory 

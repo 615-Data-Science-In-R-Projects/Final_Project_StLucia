@@ -56,6 +56,32 @@ Making the economic growth graph:
 
 ```{r}
 caricom_growth<- read.csv("St_Lucia/caricom_growth.csv") |> select(Year:Caribbean.small.states)
-ggplot(caricom_growth, aes(x="Year", color = ))
+
+ggplot(caricom_growth, aes(x="Year"))+ 
+         geom_line(aes(y=Antigua.and.Barbuda, color = 'Antigua and Barbuda', group =1))+ 
+         geom_line(aes(y=Bahamas..The, color = 'The Bahamas'))+
+         geom_line(aes(y=Barbados, color ='Barbados'))+
+         geom_line(aes(y=Belize, color = 'Belzie'))+
+         geom_line(aes(y=Dominica, color = 'Dominica'))+
+         geom_line(aes(y=Grenada, color = 'Grenada'))+
+         geom_line(aes(y=Guyana, color = 'Guyana'))+
+         geom_line(aes(y=Haiti, color = 'Haiti'))+
+         geom_line(aes(y=Jamaica, color = 'Jamaica'))+
+         geom_line(aes(y=St..Kitts.and.Nevis, color = 'St Kitts and Nevis'))+
+         geom_line(aes(y=St..Lucia, color = 'St. Lucia'))+
+         geom_line(aes(y=St..Vincent.and.the.Grenadines, color = 'St. Vincent and the Grenadines'))+
+         geom_line(aes(y=Suriname, color = 'Suriname'))+
+         geom_line(aes(y=Trinidad.and.Tobago, color = 'Trinidad and Tobago'))+
+         geom_line(aes(y=Caribbean.small.states, color = 'CARICOM'))+
+          ggtitle("Economic Growth across CARICOM")
+          #xlab("Year")+ylab('% Change in GDP')
+```
+
+```{r}
+
+antigua<- caricom_growth |> select(Year,Antigua.and.Barbuda)
+ggplot(antigua, aes(x="Year", y= Antigua.and.Barbuda, group =1))+ 
+         geom_line()
+
 ```
 

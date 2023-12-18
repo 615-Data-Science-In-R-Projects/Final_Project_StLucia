@@ -31,12 +31,12 @@ ui <- fluidPage(
              navbarMenu(title = "St Lucia",
                         tabPanel("About St. Lucia",
                                  img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
-                                 p("St. Lucia is an Island Nation in the South East Caribbean and part of
+                                 p(style="font-size:14pt","St. Lucia is an Island Nation in the South East Caribbean and part of
                                  the Windward Isles of the Lesser Antilles Chain. These include Dominica, Grenada, 
                                    Saint Lucia, Saint Vincent and the Grenadines and the French Overseas Territory 
                                    of Martinique"),
                                  p(),
-                                 p("Saint Lucia, like most of its island nation relatives and neighbors relies
+                                 p(style="font-size:14pt","Saint Lucia, like most of its island nation relatives and neighbors relies
                                    heavily on ")
                                  
                                  ),
@@ -49,14 +49,21 @@ ui <- fluidPage(
                                  leafletOutput("region_st_lucia_map", height = 900))
              ),
              
-             navbarMenu(title = "Demographics"),
+             navbarMenu(title = "Demographics",
+                        tabPanel("Population by Age",
+                                 img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
+                                 p()
+                                 )
+                        
+                        
+                        ),
              
              navbarMenu(title="Comparing Saint Lucia's Economy to that of its Neighbours",
                         
                         tabPanel("Introduction",
                           img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
                           p(),
-                          p("Here, I'll compare the economy of Saint Lucia to that of other full members of 
+                          p(style="font-size:14pt","Here, I'll compare the economy of Saint Lucia to that of other full members of 
                           CARICOM (Caribbean Communities). These include the countries that are part of the 
                           Lesser Antilles chain of islands - including the Windward and Leeward Islands - 
                           as well as Antigua and Barbuda, Jamaica, Haiti, The Bahamas and Barbados."),

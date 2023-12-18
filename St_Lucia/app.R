@@ -53,17 +53,23 @@ ui <- fluidPage(
              
              navbarMenu(title="Comparing Saint Lucia's Economy to that of its Neighbours",
                         
-                        p(),
-                        p("Here, I'll compare the economy of Saint Lucia to that of other full members of 
+                        tabPanel("Introduction",
+                          img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
+                          p(),
+                          p("Here, I'll compare the economy of Saint Lucia to that of other full members of 
                           CARICOM (Caribbean Communities). These include the countries that are part of the 
                           Lesser Antilles chain of islands - including the Windward and Leeward Islands - 
                           as well as Antigua and Barbuda, Jamaica, Haiti, The Bahamas and Barbados."),
-                        p(),
-                        h2("Economic Growth")
-             
+                        ),
+                        tabPanel("Economic Growth:",
+                                 img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;")
+                                
+                        
+                        )
              
   )
 
+)
 )
 
 # Define server logic 

@@ -12,6 +12,7 @@ library(bslib)
 library(shinypanels)
 library(shinydashboard)
 library(shinydashboardPlus)
+library(shinyWidgets)
 library(leaflet)
 library(readxl)
 
@@ -20,6 +21,10 @@ library(readxl)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+  
+  setBackgroundImage(
+    src = "St-Lucia.jpeg"
+  ),
 
   navbarPage(id = "tabs",
              title = "St. Lucia",
@@ -30,7 +35,10 @@ ui <- fluidPage(
                                  p("St. Lucia is an Island Nation in the South East Caribbean and part of
                                  the Windward Isles of the Lesser Antilles Chain. These include Dominica, Grenada, 
                                    Saint Lucia, Saint Vincent and the Grenadines and the French Overseas Territory 
-                                   of Martinique")
+                                   of Martinique"),
+                                 p(),
+                                 p("Saint Lucia, like most of its island nation relatives and neighbors relies
+                                   heavily on ")
                                  
                                  ),
                         tabPanel("A Map of St. Lucia",
@@ -47,7 +55,7 @@ ui <- fluidPage(
 
 )
 
-# Define server logic required to draw a histogram
+# Define server logic 
 server <- function(input, output) {
 
     output$stLucia_map <- renderLeaflet({

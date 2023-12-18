@@ -85,3 +85,25 @@ ggplot(antigua, aes(x="Year", y= Antigua.and.Barbuda, group =1))+
 
 ```
 
+
+
+```{r}
+pop_by_age<- read.csv("IDB_12-18-2023.csv") |> select(Year, GROUP,
+                                                      Male.Population,
+                                                      Female.Population,
+                                                      )
+
+pyramid_frame<- pop_by_age |> pivot_longer(cols = c(Male.Population,Female.Population),names_to = "Gender", values_to="Population") 
+
+pyramid_frame$Gender <- ifelse(pyramid_frame$Gender=="Male.Population", "M","F")
+
+pyramid_frame<- pyramid_frame |> mutate(Population=
+                                          ifelse(Gender=="M", Population*(-1),
+                                            Population)) |> filter(Year==2023) |> filter(GROUP!="TOTAL")
+
+ggplot(data=pyramid_frame, aes(x=GROUP, y = Population, fill=Gender))+
+  geom_bar(stat="identity")+coord_flip()+scale_fill_manual()
+
+
+```
+

@@ -50,9 +50,37 @@ ui <- fluidPage(
              ),
              
              navbarMenu(title = "Demographics",
-                        tabPanel("Population by Age",
+                        tabPanel("How has Saint Lucia's Population Aged?",
                                  img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
-                                 p()
+                                 p("Saint Lucia is a SID or Small Island Developing Nation. The distinction is made from 
+                                   developing nations purely because of the economic idisyncracies being an island nation brings with it.
+                                   That said, I wanted to look at how the population of Saint Lucia has Aged."),
+                                 p(),
+                                 p("Characteristic of developing nations in general is the shape of their population pyramid. These tend to 
+                                   have large bases and taper to the top(there are simply, fewer older people relative to the whole population.
+                                   As economies and countries age, these pyramids start to get fatter around the middle and if the pyramid inverts,
+                                   you're in big trouble."),
+                                 p(),
+                                 p("Move the slider on the graph below to see how the shape of Saint Lucia's population pyramid has changed since 1991"),
+                                 
+                                 sidebarLayout(
+                                   
+                                   sidebarPanel(
+                                     sliderInput("Year",
+                                                 "Year",
+                                                 min = 1991,
+                                                 max = 2023,
+                                                 value = 2023
+                                       
+                                     )
+                                    
+                                   ),
+                                   
+                                   mainPanel(
+                                     plotOutput("pyramidPlot")
+                                   )
+                                 )
+                              
                                  )
                         
                         

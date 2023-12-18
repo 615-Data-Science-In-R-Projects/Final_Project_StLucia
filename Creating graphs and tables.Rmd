@@ -6,6 +6,56 @@ date: "2023-12-18"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
 ```
 
+```{r}
+economic_growth_data<- read.csv("St_Lucia/caricom_growth_data.csv")
+caricom_country_list<- c("Antigua and Barbuda",
+                          "Bahamas, The",
+                          "Barbados",
+                          "Belize",
+                          "Dominica",
+                          "Grenada",
+                          "Guyana",
+                          "Haiti",
+                          "Jamaica",
+                          "St. Kitts and Nevis",
+                          "St. Lucia",
+                          "St. Vincent and the Grenadines",
+                          "Suriname",
+                          "Trinidad and Tobago",
+                          "Caribbean small states")
+
+caricom_growth_data<- economic_growth_data |> filter(Country.Name %in% caricom_country_list) |> 
+                            select(c(Country.Name,X1978:last_col()))
+
+caricom_growth_data$Country.Name<- ifelse(caricom_growth_data$Country.Name=="Caribbean small states",
+                                          "CARICOM", caricom_growth_data$Country.Name)
+
+col<- str_replace(colnames(caricom_growth_data),"X","")
+colnames(caricom_growth_data)<- col
+
+caricom_growth_data_1<- as.data.frame(t(caricom_growth_data), row.names=c(1:46))
+colnames(caricom_growth_data_1)<- caricom_country_list
+caricom_growth_data_1<- caricom_growth_data_1[-1,]
+
+years<- c(1978:2022)
+caricom_growth_data_1<- caricom_growth_data_1 |> mutate(
+                                              Year = years, .before=1
+)
+
+#Let's write this out into a csv:
+
+write.csv(caricom_growth_data_1,"caricom_growth.csv")
+
+```
+
+Making the economic growth graph:
+
+```{r}
+caricom_growth<- read.csv("St_Lucia/caricom_growth.csv") |> select(Year:Caribbean.small.states)
+ggplot(caricom_growth, aes(x="Year", color = ))
+```
 

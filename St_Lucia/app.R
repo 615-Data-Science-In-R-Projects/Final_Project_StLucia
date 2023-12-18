@@ -47,7 +47,9 @@ ui <- fluidPage(
                         
                         tabPanel("St Lucia in the South Eastern Caribbean",
                                  leafletOutput("region_st_lucia_map", height = 900))
-             )
+             ),
+             
+             navbarMenu(title = "Demographics")
              
              
   )

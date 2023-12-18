@@ -49,7 +49,17 @@ ui <- fluidPage(
                                  leafletOutput("region_st_lucia_map", height = 900))
              ),
              
-             navbarMenu(title = "Demographics")
+             navbarMenu(title = "Demographics"),
+             
+             navbarMenu(title="Comparing Saint Lucia's Economy to that of its Neighbours",
+                        
+                        p(),
+                        p("Here, I'll compare the economy of Saint Lucia to that of other full members of 
+                          CARICOM (Caribbean Communities). These include the countries that are part of the 
+                          Lesser Antilles chain of islands - including the Windward and Leeward Islands - 
+                          as well as Antigua and Barbuda, Jamaica, Haiti, The Bahamas and Barbados."),
+                        p(),
+                        h2("Economic Growth")
              
              
   )

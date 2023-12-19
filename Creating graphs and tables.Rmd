@@ -56,25 +56,18 @@ Making the economic growth graph:
 
 ```{r}
 caricom_growth<- read.csv("St_Lucia/caricom_growth.csv") |> select(Year:Caribbean.small.states)
+caricom_growth$Year<- ymd(caricom_growth$Year, truncated=2L)
+colnames(caricom_growth)<- c("Year","Antigua and Barbuda", "The Bahamas","Barbados", "Belize",
+                             "Dominica","Grenada", "Guyana","Haiti", "Jamaica",
+                             "St.Kitts and Nevis", "St. Lucia", "St. Vincent and the Grenadines",
+                             "Suriname", "Trinidad and Tobago", "CARICOM")
 
-ggplot(caricom_growth, aes(x="Year"))+ 
-         geom_line(aes(y=Antigua.and.Barbuda, color = 'Antigua and Barbuda', group =1))+ 
-         geom_line(aes(y=Bahamas..The, color = 'The Bahamas'))+
-         geom_line(aes(y=Barbados, color ='Barbados'))+
-         geom_line(aes(y=Belize, color = 'Belzie'))+
-         geom_line(aes(y=Dominica, color = 'Dominica'))+
-         geom_line(aes(y=Grenada, color = 'Grenada'))+
-         geom_line(aes(y=Guyana, color = 'Guyana'))+
-         geom_line(aes(y=Haiti, color = 'Haiti'))+
-         geom_line(aes(y=Jamaica, color = 'Jamaica'))+
-         geom_line(aes(y=St..Kitts.and.Nevis, color = 'St Kitts and Nevis'))+
-         geom_line(aes(y=St..Lucia, color = 'St. Lucia'))+
-         geom_line(aes(y=St..Vincent.and.the.Grenadines, color = 'St. Vincent and the Grenadines'))+
-         geom_line(aes(y=Suriname, color = 'Suriname'))+
-         geom_line(aes(y=Trinidad.and.Tobago, color = 'Trinidad and Tobago'))+
-         geom_line(aes(y=Caribbean.small.states, color = 'CARICOM'))+
-          ggtitle("Economic Growth across CARICOM")
-          #xlab("Year")+ylab('% Change in GDP')
+ggplot(caricom_growth, aes(x=Year))+
+         geom_line(aes(y=`St. Lucia`, color = 'St. Lucia'))+
+         geom_line(aes(y= CARICOM, color = 'CARICOM'))+
+         ggtitle("Economic Growth of Saint Lucia relative to rest of CARICOM")+
+         xlab("Year")+ylab('% Change in GDP')+
+         scale_color_manual(name="Country", values = c('#581845','#FFC300') )
 ```
 
 ```{r}
@@ -88,7 +81,7 @@ ggplot(antigua, aes(x="Year", y= Antigua.and.Barbuda, group =1))+
 
 
 ```{r}
-pop_by_age<- read.csv("IDB_12-18-2023.csv") |> select(Year, GROUP,
+pop_by_age<- read.csv("St_Lucia/IDB_12-18-2023.csv") |> select(Year, GROUP,
                                                       Male.Population,
                                                       Female.Population,
                                                       )
@@ -96,13 +89,23 @@ pop_by_age<- read.csv("IDB_12-18-2023.csv") |> select(Year, GROUP,
 pyramid_frame<- pop_by_age |> pivot_longer(cols = c(Male.Population,Female.Population),names_to = "Gender", values_to="Population") 
 
 pyramid_frame$Gender <- ifelse(pyramid_frame$Gender=="Male.Population", "M","F")
+pyramid_frame$Year<- ymd(pyramid_frame$Year, truncated=2L)
 
 pyramid_frame<- pyramid_frame |> mutate(Population=
                                           ifelse(Gender=="M", Population*(-1),
-                                            Population)) |> filter(Year==2023) |> filter(GROUP!="TOTAL")
+                                            Population)) |> filter(GROUP!= "100+") |>filter(GROUP!="TOTAL") 
+
+
+range_pop<- range(pyramid_frame$Population)
+breaks_pop<- pretty(range_pop, n=7)
+
 
 ggplot(data=pyramid_frame, aes(x=GROUP, y = Population, fill=Gender))+
-  geom_bar(stat="identity")+coord_flip()+scale_fill_manual()
+  geom_bar(stat="identity")+coord_flip()+
+  scale_fill_manual(name = "Gender",labels = c("Male", "Female"),
+                      values = c('#581845','#FFC300'))+
+  scale_y_continuous(breaks  = breaks_pop,
+                       labels = abs(breaks_pop))
 
 
 ```

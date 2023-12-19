@@ -60,11 +60,12 @@ ui <- fluidPage(
                                  p(style="font-size:14pt","St. Lucia is an Island Nation in the South East Caribbean and part of
                                  the Windward Isles of the Lesser Antilles Chain. These include Dominica, Grenada, 
                                    Saint Lucia, Saint Vincent and the Grenadines and the French Overseas Territory 
-                                   of Martinique."),
+                                   of Martinique. Saint Lucia is a constitutional monarchy with its own Prime Minister (currently Phillip J Pierre) 
+                                   and with King Charles III as its monarch."),
                                  p(),
                                  p(style="font-size:14pt","Saint Lucia, like most of its island nation relatives and neighbors relies
                                    heavily on tourism. In 2018, tourism accounted for 65% of Saint Lucia's GDP. The country is known for
-                                   its beaches, hiking, watersports, an annual Jazz Festival and its own cuisine"),
+                                   its beaches, hiking, watersports, an annual Jazz Festival and its distinctive cuisine"),
                                  p(),
                                  p(style="font-size:14pt","Saint Lucia also has a rich history. 
                                    In the 1550's a pirate known as Jambe-du-Bois(wooden leg in french, his real name was Francois Le Clerc) made Pigeon Island(now artifically attached to the rest of Saint
@@ -73,13 +74,29 @@ ui <- fluidPage(
                                    These sorts of historical tales and forts and lighthouses left by European settlers make Saint Lucia unique in its touristic appeals
                                    even among the many other nearby Caribbean Islands."),
                                  p(),
-                                 p(style="font-size:14pt","The dominant natural landmarks in Saint Lucia are the pitons - two Mountains created by volcaninc activity 16-18 million years ago.
+                                 fluidRow(
+                                  box(
+                                    uiOutput('image'),
+                                    br()
+                                    ),
+                                  p(style="font-size:14pt","The dominant natural landmarks in Saint Lucia are the Pitons - two mountains created by volcaninc activity 16-18 million years ago.
                                    They have very distinctive shapes and in fact, you can see them in the background image. The fatter, shorter one is known as Gros Piton and the
-                                   skinnier, taller mountain is called Petit Piton. The two mountains together form the shape we see in Saint Lucia's flag."),
+                                   skinnier, taller mountain is called Petit Piton. The two mountains together form the shape we see in Saint Lucia's flag. The Mountains together are a World Heritage and are located on the 
+                                    southwest coast of Saint Lucia in the district of Soufriere.")
+                                 ),
                                  p(),
                                  p(style="font-size:14pt","Use the drop down menu under 'St Lucia' to look at maps of St. Lucia. You'll see the Pitons and the capital city of Castries marked out.You can use
-                                 that map or the regional map and zoom out to see where Saint Lucia lies relative to the Caribbean Islands around it and where it lies around the world.")
-                                 
+                                 that map or the regional map and zoom out to see where Saint Lucia lies relative to the Caribbean Islands around it and where it lies around the world."),
+                                 p(),
+                                 h4("A few statistics about Saint Lucia Economy"),
+                                 p(),p(),
+                                 tableOutput("econStatistics"),
+                                 p(),p(),
+                                 h4("What this app looks at"),
+                                 p(),
+                                 p(style="font-size:14pt","This app looks generally at how Saint Lucia's population has been aging at quite a substantial rate over the last few years.
+                                   It compares this to factors such as economic growth and migration in Saint Lucia and in other CARICOM countries. Finally, we shall
+                                   perform a SWOT analysis based, to some extent on the other discussions and points we have made.")
                                  ),
                         
                         tabPanel("A Map of St. Lucia",
@@ -94,16 +111,16 @@ ui <- fluidPage(
              navbarMenu(title = "Demographics",
                         tabPanel("How has Saint Lucia's Population Aged?",
                                  img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
-                                 p("Saint Lucia is a SID or Small Island Developing Nation. The distinction is made from 
+                                 p(style="font-size:14pt","Saint Lucia is a SID or Small Island Developing Nation. The distinction is made from 
                                    developing nations purely because of the economic idisyncracies being an island nation brings with it.
                                    That said, I wanted to look at how the population of Saint Lucia has Aged."),
                                  p(),
-                                 p("Characteristic of developing nations in general is the shape of their population pyramid. These tend to 
+                                 p(style="font-size:14pt","Characteristic of developing nations in general is the shape of their population pyramid. These tend to 
                                    have large bases and taper to the top(there are simply, fewer older people relative to the whole population.
                                    As economies and countries age, these pyramids start to get fatter around the middle and if the pyramid inverts,
                                    you're in big trouble."),
                                  p(),
-                                 p("Move the slider on the graph below to see how the shape of Saint Lucia's population pyramid has changed since 1991"),
+                                 p(style="font-size:14pt","Move the slider on the graph below to see how the shape of Saint Lucia's population pyramid has changed since 1991"),
                                  
                                  sidebarLayout(
                                    
@@ -125,13 +142,13 @@ ui <- fluidPage(
                                  ),
                                  
                                  p(),
-                                 p("As you drag the slider above from left to right, you can see how the population
+                                 p(style="font-size:14pt","As you drag the slider above from left to right, you can see how the population
                                    pyramid of Saint Lucia goes from pyramid shaped to more 'kite' shaped. This is representative
                                    of a rapidly aging population. But what gives? Relative to other developing countries, this seems to
                                    be a very rapid shift in the age profile, happening over only 32 years. Countries like India, Indonesia and even,
                                    more comparably, Jamaica have not seen their age demographics shift to the same extent."),
                                  p(),
-                                 p("Now obviously, with a country with a small population like Saint Lucia, any shift at all will have a larger 
+                                 p(style="font-size:14pt","Now obviously, with a country with a small population like Saint Lucia, any shift at all will have a larger 
                                    relative effect. ")
                               
                                  )
@@ -163,12 +180,20 @@ ui <- fluidPage(
 
 # Define server logic 
 server <- function(input, output) {
-
+  
+    output$image<- renderUI({
+      tags$img(src="lc-flag.jpeg", width = 200 )
+    })
+    
     output$stLucia_map <- renderLeaflet({
         leaflet() |> 
         addTiles() |> setView(lng=-60.966667, lat=13.883333, zoom = 11) |> 
         addMarkers(lng=-60.966667, lat=13.883333)
       
+    })
+    
+    output$econStatistics<- renderTable({
+      data.frame(Statistic=c("Population", "GDP","HDI", "Gini Coefficient"),Value = c("179,651","$3.452 billion", "0.751 (high)", "0.51 (high)"))
     })
     
     output$region_st_lucia_map<- renderLeaflet({
@@ -189,7 +214,7 @@ server <- function(input, output) {
       ggplot(data=pyramid_frame, aes(x=GROUP, y = Population, fill=Gender))+
         geom_bar(stat="identity")+coord_flip()+
         scale_fill_manual(name = "Gender",labels = c("Male", "Female"),
-                          values = c('#581845','#FFC300'))+
+                          values = c('#581845','#FFC300'))+xlab("Age Groups")+
         scale_y_continuous(breaks  = breaks_pop,
                            labels = abs(breaks_pop))
     })

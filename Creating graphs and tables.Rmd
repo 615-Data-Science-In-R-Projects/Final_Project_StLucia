@@ -104,6 +104,7 @@ ggplot(data=pyramid_frame, aes(x=GROUP, y = Population, fill=Gender))+
   geom_bar(stat="identity")+coord_flip()+
   scale_fill_manual(name = "Gender",labels = c("Male", "Female"),
                       values = c('#581845','#FFC300'))+
+  ylab("Age Groups)
   scale_y_continuous(breaks  = breaks_pop,
                        labels = abs(breaks_pop))
 

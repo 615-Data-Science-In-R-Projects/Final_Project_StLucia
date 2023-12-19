@@ -261,7 +261,8 @@ server <- function(input, output) {
       leaflet() |> 
       addTiles() |> setView(lng=-60.966667, lat=13.883333, zoom = 7) |> 
       addMarkers(lng=-60.966667, lat=13.883333, 
-                 popup= "St. Lucia")
+                 popup= "St. Lucia") |> addMarkers(lng=-61.0666664,lat=13.7999968, popup = "Gros Piton") |> 
+        addMarkers(lng=-61.0666664, lat = 13.83333 , popup = "Petit Piton")
     })
     
     output$pyramidPlot<- renderPlot({

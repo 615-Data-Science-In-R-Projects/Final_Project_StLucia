@@ -232,9 +232,26 @@ ui <- fluidPage(
                                          underwater in just a couple of generations. At that point, it might not matter whether or not Saint Lucia is able to halt an exodus of its young people,
                                          in fact it might even be desirable to encourage it."))
                
-             )
+             ),
+             
+             navbarMenu(title="Bibliography",
+                        align="right",
+                        tabPanel(tags$a(href="https://en.wikipedia.org/wiki/Saint_Lucia",
+                                        "Wikipedia/St.Lucia")),
+                        tabPanel(tags$a(href="https://www.shinyapps.io/",
+                                        "shinyapps.io for publishing")),
+                        
+                        
+                        tabPanel(tags$a(href="https://www.njtierney.com/post/2022/08/09/ggplot-pyramid/")),
+                        
+                        tabPanel(tags$a(href = "https://data.worldbank.org/indicator/SM.POP.NETM?display=gr&locations=LC","net migration data")),
+                        tabPanel(tags$a(href="https://www.statista.com/statistics/789517/caribbean-direct-contribution-travel-tourism-gdp-country/","Tourism and GDP")),
+                        tabPanel(tags$a(href="https://rstudio.github.io/leaflet/",
+                                        "Leaflet doc")),
+                        tabPanel(tags$a(href="https://www.census.gov/programs-surveys/international-programs/about/idb.html","Population data"))
 
 
+)
 )
 )
 
@@ -249,7 +266,9 @@ server <- function(input, output) {
     output$stLucia_map <- renderLeaflet({
         leaflet() |> 
         addTiles() |> setView(lng=-60.966667, lat=13.883333, zoom = 11) |> 
-        addMarkers(lng=-60.966667, lat=13.883333)
+        addMarkers(lng=-61.00614, lat=113.9957, 
+                   popup= "Castries") |> addMarkers(lng=-61.0666664,lat=13.7999968, popup = "Gros Piton") |> 
+        addMarkers(lng=-61.0666664, lat = 13.83333 , popup = "Petit Piton")
       
     })
     
@@ -261,8 +280,7 @@ server <- function(input, output) {
       leaflet() |> 
       addTiles() |> setView(lng=-60.966667, lat=13.883333, zoom = 7) |> 
       addMarkers(lng=-60.966667, lat=13.883333, 
-                 popup= "St. Lucia") |> addMarkers(lng=-61.0666664,lat=13.7999968, popup = "Gros Piton") |> 
-        addMarkers(lng=-61.0666664, lat = 13.83333 , popup = "Petit Piton")
+                 popup= "St. Lucia")
     })
     
     output$pyramidPlot<- renderPlot({

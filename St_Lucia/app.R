@@ -49,7 +49,7 @@ ui <- fluidPage(
   
 
   navbarPage(id = "tabs",
-             titlePanel(title = span(img(src="lc-flag.jpeg",height=30, width =40, style = "float:left;")), 'Saint Lucia - The effect of Tourism and Migration on the aging of an small Island Nation'),
+             title = 'Saint Lucia - The effect of Tourism and Migration on the aging of an small Island Nation'),
              
              #maps, general information:
              navbarMenu(title = "St Lucia",

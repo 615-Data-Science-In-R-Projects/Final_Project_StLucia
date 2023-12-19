@@ -49,7 +49,7 @@ ui <- fluidPage(
   
 
   navbarPage(id = "tabs",
-             title = 'Saint Lucia - The effect of Tourism and Migration on the aging of an small Island Nation'),
+             title = 'Saint Lucia - The effect of Tourism and Migration on Population Aging',
              
              #maps, general information:
              navbarMenu(title = "St Lucia",
@@ -64,7 +64,7 @@ ui <- fluidPage(
                                    and with King Charles III as its monarch."),
                                  p(),
                                  p(style="font-size:14pt","Saint Lucia, like most of its island nation relatives and neighbors relies
-                                   heavily on tourism. In 2018, tourism accounted for 65% of Saint Lucia's GDP. The country is known for
+                                   heavily on tourism. In 2018, tourism accounted for 48.6% of Saint Lucia's GDP. The country is known for
                                    its beaches, hiking, watersports, an annual Jazz Festival and its distinctive cuisine"),
                                  p(),
                                  p(style="font-size:14pt","Saint Lucia also has a rich history. 
@@ -149,7 +149,12 @@ ui <- fluidPage(
                                    more comparably, Jamaica have not seen their age demographics shift to the same extent."),
                                  p(),
                                  p(style="font-size:14pt","Now obviously, with a country with a small population like Saint Lucia, any shift at all will have a larger 
-                                   relative effect. ")
+                                   relative effect. However, it might also make sense that emigration and immigration patterns would affect the age 'shape' of such a country.
+                                   Are Saint Lucia's young people leaving to find work elsewhere while aged retirees come and fall in love and settle down?
+                                   How much of a problem is this for the island?"),
+                                 p(),
+                                 p("Below is a graph of the net migration into Saint Lucia, overlaid with immigration. The two graphs together should
+                                   be sufficient to allow us to gains ome idea of what we can do to identify and confirm the trends we suspect above.")
                               
                                  )
                         
@@ -157,24 +162,81 @@ ui <- fluidPage(
                         ),
              
              navbarMenu(title="Comparing Saint Lucia's Economy to that of its Neighbours",
-                        
-                        tabPanel("Introduction",
-                          img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
-                          p(),
-                          p(style="font-size:14pt","Here, I'll compare the economy of Saint Lucia to that of other full members of 
+                        tabPanel("Economic Growth:",
+                                 img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
+                                 p(style="font-size:14pt","Here, I'll compare the economy of Saint Lucia to that of other full members of 
                           CARICOM (Caribbean Communities). These include the countries that are part of the 
                           Lesser Antilles chain of islands - including the Windward and Leeward Islands - 
                           as well as Antigua and Barbuda, Jamaica, Haiti, The Bahamas and Barbados."),
-                        ),
-                        tabPanel("Economic Growth:",
-                                 img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
-                                 plotOutput("economicGrowth")
-                                
+                                 sidebarLayout(
+                                   
+                                   sidebarPanel(
+                                     selectInput("Country",
+                                                 "Pick a Country to compare with Saint Lucia",
+                                                 choices = c(colnames(caricom_growth)[2:11], colnames(caricom_growth)[13:16])
+                                                 )
+                                                 
+                                     ),
+                                   
+                                   mainPanel(
+                                     plotOutput("economicGrowth")
+                                   )
+                                     
+                                   ),
+                             
                         
-                        )
+                        ),
+                        tabPanel(title="Tourism as a percent of GDP",
+                                 p(),
+                                 p("font-size:14pt","We compare Saint Lucia's dependence on Tourism, as measured by its percent contribution to GDP
+                                   with that of other Caribbean countries, not all of whom are in CARICOM. All the same, the countries lower down on the chart below
+                                   are generally less dependent on tourism. high dependence on tourism might reinforce that tourists will settle into the country but it
+                                   also indicates why young people might be leaving. As evidenced by the Gini Coefficient we cited in the first tab of this Shiny App, 
+                                   there is a lot of income inequality in Saint Lucia. This is because most tourim jobs are generally low paying and traditional roles and customs combined
+                                   with that factor can often drive young people to seek employment outside of their home countries. "),
+                                 plotOutput("migrationGraph")
+                                 ),
+                                
              
-  )
+               ),
+             
+             nav_panel(title="SWOT Analysis",
+                       panelsPage(
+                         panel(title = "Strengths",
+                               width = 300,
+                               hidden = FALSE,
+                               body = p("Saint Lucia's strengths lie in its unique culture, cuisine and its clear appeal to tourists and potential settlers as evidenced
+                                         by its rebounding growth after COVID and the change in net migration over the years. It also has a larger share of agricultural as a percentage
+                                         of GDP than some of its other neighbors and is better positioned to take advantage of that.")
+                         ),
+                         panel(title = "Weakness",
+                               width = 300,
+                               hidden=FALSE,
+                               body=p("Saint Lucia's weaknesses clearly lie in the competition its major economic product has with other countries in the region.
+                                      This is exacerbated by its rapidly aging population, which is a problem which if left unsolved could lead to increasingly severe
+                                      economic challenges.")
+                               ),
+                         panel(title = "Opportunity",
+                               width = 300, 
+                               hidden = TRUE,
+                               body = p("That Saint Lucia's net migration has gotten a lot better over the years and that its able to attract foreigners is a plus. 
+                                        An opportunity may lie in expanding its other industries to entice its young people to stay and perhaps to entice young people
+                                        from outside the country to come and stay too. Look at Bermuda for example, which in the aftermath of the pandemic was offering
+                                        temporary residence permits to remote workers to come work there. Who wouldn't want to work from the beach of an island paradise 
+                                        such as Saint Lucia?")
+                               ),
+                         panel( title = "Threats",
+                                width = 300,
+                                hidden=TRUE,
+                                body = p("This is the big one. There could be no greater threat to any island nation than the rising sea levels brought on
+                                         by climate change. If the rest of the world doesn't get its act together we could see the beautiful coastlines of Saint Lucia
+                                         underwater in just a couple of generations. At that point, it might not matter whether or not Saint Lucia is able to halt an exodus of its young people,
+                                         in fact it might even be desirable to encourage it."))
+               
+             )
 
+
+)
 )
 )
 
@@ -220,9 +282,10 @@ server <- function(input, output) {
     })
     
     output$economicGrowth<- renderPlot({
+      country<- input$Country
       ggplot(caricom_growth, aes(x=Year))+
         geom_line(aes(y=`St. Lucia`, color = 'St. Lucia'))+
-        geom_line(aes(y= CARICOM, color = 'CARICOM'))+
+        geom_line(aes(y= country, color = country))+
         ggtitle("Economic Growth of Saint Lucia relative to rest of CARICOM")+
         xlab("Year")+ylab('% Change in GDP')+
         scale_color_manual(name="Country", values = c('#581845','#FFC300') )

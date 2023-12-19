@@ -68,6 +68,18 @@ ggplot(caricom_growth, aes(x=Year))+
          ggtitle("Economic Growth of Saint Lucia relative to rest of CARICOM")+
          xlab("Year")+ylab('% Change in GDP')+
          scale_color_manual(name="Country", values = c('#581845','#FFC300') )
+
+country<-"Grenada"
+
+
+ggplot(caricom_growth, aes(x=Year))+
+        geom_line(aes(y=`St. Lucia`, color = 'St. Lucia'))+
+        geom_line(aes(y= country, color = country))+
+        ggtitle("Economic Growth of Saint Lucia relative to rest of CARICOM")+
+        xlab("Year")+ylab('% Change in GDP')
+#+
+  #      scale_color_manual(name="Country", values = c('#581845','#FFC300') )
+   
 ```
 
 ```{r}

@@ -154,13 +154,18 @@ ui <- fluidPage(
                                    relative effect. However, it might also make sense that emigration and immigration patterns would affect the age 'shape' of such a country.
                                    Are Saint Lucia's young people leaving to find work elsewhere while aged retirees come and fall in love and settle down?
                                    How much of a problem is this for the island?"),
-                                 p(),
-                                 p("Below is a graph of the net migration into Saint Lucia, overlaid with immigration. The two graphs together should
+                                 p()
+                        ),
+                        tabPanel(title="Migration to and from Saint Lucia",
+                                 img(src="St-Lucia.jpeg", style = "width:100%; position: absolute; opacity: 0.2;"),
+                                 p(style="font-size:14pt","Below is a graph of the net migration into Saint Lucia, overlaid with immigration. The two graphs together should
                                    be sufficient to allow us to gains ome idea of what we can do to identify and confirm the trends we suspect above."),
-                                 plotOutput("migrationGraph")
-                              
-                                 )
-                        
+                                 plotOutput("migrationGraph"),
+                                 p(),
+                                 p(style="font-size:14pt","We can see that immigration into Saint Lucia has greatly increased, more so even than emigration might have decreased. This could account for 
+                                   why Saint Lucia's population has aged. However, we can see that emigration has greatly increased too and since this might be overwhelmingly young people,
+                                   this could pose serious questions for Saint Lucia's future - questions that even more developed nations such as Japan are struggling to face right now.")
+                        )
                         
                         ),
              
@@ -173,7 +178,7 @@ ui <- fluidPage(
                           as well as Antigua and Barbuda, Jamaica, Haiti, The Bahamas and Barbados."),
                                  plotOutput("economicGrowth"),
                                  p(),
-                                 p("We can see that the growth rate of Saint Lucia is pretty well correlated with that of its neighbors. 
+                                 p(style="font-size:14pt","We can see that the growth rate of Saint Lucia is pretty well correlated with that of its neighbors. 
                                    However, we can see that it was impacted much worse by COVID than its neighbors were on average but has recovered much much better too.
                                    This might be down to how much more heavily it depends on tourism for its GDP than other members of CARICOM. That would
                                    explain both why it suffered much more during Covid and why, in the travel boom that followd it recovered much faster.")
@@ -297,7 +302,7 @@ server <- function(input, output) {
         geom_line(aes(y= `Net Migration`, color = 'Net Migration'))+
         ggtitle("Immigration and Emigration in Saint Lucia")+
         xlab("Year")+ylab('Number of Migrants')+
-        scale_color_manual(name="Migration Type", values = c('#581845','#FFC300'))
+        scale_color_manual(name="Migration Type", values = c('#581845','red'))
     })
 }
 

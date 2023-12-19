@@ -105,7 +105,7 @@ pyramid_frame$Year<- ymd(pyramid_frame$Year, truncated=2L)
 
 pyramid_frame<- pyramid_frame |> mutate(Population=
                                           ifelse(Gender=="M", Population*(-1),
-                                            Population)) |> filter(GROUP!= "100+") |>filter(GROUP!="TOTAL") 
+                                            Population)) |> filter(GROUP!= "100+") |>filter(GROUP!="TOTAL") |> filter(GROUP!= "5-9")
 
 
 range_pop<- range(pyramid_frame$Population)
@@ -121,5 +121,14 @@ ggplot(data=pyramid_frame, aes(x=GROUP, y = Population, fill=Gender))+
                        labels = abs(breaks_pop))
 
 
+```
+
+```{r}
+
+tourism<- read_excel("St_Lucia/Tourism.xlsx")
+  ggplot(tourism,aes(x=`Percent GDP Spent on Tourism`, reorder(Country, Percent GDP Spent on Tourism`)))+
+        geom_bar(stat="identity")+
+        theme(axis.text.x = element_text(angle = 45, hjust=1))+
+        ggtitle("Caribbean Countries and their Economic Dependency on Tourism")
 ```
 
